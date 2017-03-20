@@ -1,7 +1,7 @@
 - service: nginx
   type: push
   image_name: gcr.io/flash2-staging/nginx
-  image_tag: "{{.Branch}}"
+  image_tag: "{{.Branch}}.{{.CommitID}}"
   registry: https://gcr.io
   dockercfg_service: gcr_dockercfg
   tag: ^(master|develop)
