@@ -16,4 +16,4 @@ google_cloud_deployment_nginx:
 gcr_dockercfg:
   image: codeship/gcr-dockercfg-generator
   add_docker: true
-  encrypted_env_file: deploy/staging/google_deployment.env.encrypted
+  encrypted_env_file: deploy/develop/google_deployment.env.encrypted
