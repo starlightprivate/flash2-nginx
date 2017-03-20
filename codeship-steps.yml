@@ -3,7 +3,7 @@
   image_name: gcr.io/flash2-staging/nginx
   image_tag: "{{.Branch}}.{{.CommitID}}"
   registry: https://gcr.io
-  dockercfg_service: gcr_dockercfg
+  dockercfg_service: develop_gcr_dockercfg
   tag: ^(master|develop)
 
 - service: develop_google_cloud_deployment_nginx
