@@ -3,7 +3,9 @@ set -e
 
 export CLUSTER_NAME="flash2-staging"
 export APPLICATION_NAME="nginx"
-export IMAGE_NAME="gcr.io/flash2-staging"
+export IMAGE_REPO="gcr.io/flash2-staging"
+export IMAGE_NAME="nginx"
+export SECRET_NAME="ssl-secret"
 
 # authenticate to google cloud
 codeship_google authenticate
