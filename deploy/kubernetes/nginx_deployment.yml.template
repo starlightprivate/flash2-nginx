@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: ${APPLICATION_NAME}
 spec:
-  replicas: ${NGINX_REPLICAS}
+  replicas: ${REPLICAS}
   template:
     metadata:
       labels:
@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: ${APPLICATION_NAME}
-        image: ${IMAGE_NAME}/${IMAGE_NAME}:${CI_COMMIT_ID} 
+        image: ${IMAGE_NAME}/${IMAGE_NAME}:${IMAGE_TAG}
         ports:
         -
           containerPort: 80

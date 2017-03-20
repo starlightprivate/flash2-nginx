@@ -1,11 +1,10 @@
 #!/bin/bash
 set -e
 
-export CLUSTER_NAME="flash2-staging"
-export APPLICATION_NAME="nginx"
-export IMAGE_REPO="gcr.io/flash2-staging"
-export IMAGE_NAME="nginx"
 export SECRET_NAME="ssl-secret"
+export IMAGE_TAG="${CI_COMMIT_ID}.${CI_BRANCH}"
+export IMAGE_NAME="nginx"
+export APPLICATION_NAME="nginx"
 
 # authenticate to google cloud
 codeship_google authenticate
@@ -18,9 +17,6 @@ gcloud container clusters get-credentials "${CLUSTER_NAME}"
 
 # install envsubst
 apt-get install gettext-base -y
-
-# export env
-export NGINX_REPLICAS=3
 
 # update kubernetes Deployment file
 envsubst < deploy/kubernetes/nginx_deployment.yml.template > deploy/kubernetes/nginx_deployment.yml

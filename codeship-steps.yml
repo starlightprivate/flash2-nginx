@@ -1,4 +1,4 @@
-- service: nginx
+- service: develop_build_nginx
   type: push
   image_name: gcr.io/flash2-staging/nginx
   image_tag: "{{.Branch}}.{{.CommitID}}"
@@ -6,6 +6,6 @@
   dockercfg_service: gcr_dockercfg
   tag: ^(master|develop)
 
-#- service: google_cloud_deployment_nginx
-#  command: /deploy/deploy_nginx.sh
-#  tag: ^(master|develop)
+- service: develop_google_cloud_deployment_nginx
+  command: /deploy/deploy_nginx.sh
+  tag: ^(master|develop)
