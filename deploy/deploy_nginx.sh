@@ -31,7 +31,7 @@ if [[ -z "$deployment_flag" ]]; then
   echo "Create new deployment and service for ${APPLICATION_NAME}"
   GOOGLE_APPLICATION_CREDENTIALS=/keyconfig.json kubectl create -f deploy/kubernetes/secrets.yml
   GOOGLE_APPLICATION_CREDENTIALS=/keyconfig.json kubectl create -f deploy/kubernetes/nginx_deployment.yml
-  #GOOGLE_APPLICATION_CREDENTIALS=/keyconfig.json kubectl expose deployment ${APPLICATION_NAME} --name=${APPLICATION_NAME} --port=80,443 --type="LoadBalancer"
+  GOOGLE_APPLICATION_CREDENTIALS=/keyconfig.json kubectl expose deployment ${APPLICATION_NAME} --name=${APPLICATION_NAME} --port=80,443 --type="LoadBalancer"
 else
   echo "Rolling update for ${APPLICATION_NAME}"
   GOOGLE_APPLICATION_CREDENTIALS=/keyconfig.json kubectl apply -f deploy/kubernetes/nginx_deployment.yml
