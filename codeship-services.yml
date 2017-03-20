@@ -1,0 +1,19 @@
+nginx:
+  build:
+    image: flash2-staging/nginx
+    dockerfile_path: nginx/Dockerfile
+  encrypted_env_file: deploy/develop/environment.env.encrypted
+  cached: true
+  default_cache_branch: "develop"
+
+google_cloud_deployment_nginx:
+  image: zachflower/google-cloud-deployment
+  add_docker: true
+  encrypted_env_file: deploy/develop/google_deployment.env.encrypted
+  volumes:
+    - ./deploy/:/deploy
+
+gcr_dockercfg:
+  image: codeship/gcr-dockercfg-generator
+  add_docker: true
+  encrypted_env_file: deploy/staging/google_deployment.env.encrypted
