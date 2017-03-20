@@ -4,7 +4,7 @@ set -e
 export SECRET_NAME="ssl-secret"
 export IMAGE_TAG="${CI_BRANCH}.${CI_COMMIT_ID}"
 export IMAGE_NAME="nginx"
-export APPLICATION_NAME="nginx"
+export APPLICATION_NAME="nginx3"
 
 # authenticate to google cloud
 codeship_google authenticate
