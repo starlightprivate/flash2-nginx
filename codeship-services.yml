@@ -13,9 +13,9 @@ develop_google_cloud_deployment_nginx:
   volumes:
     - ./deploy/:/deploy
   environment:
-    CLUSTER_NAME=flash2-staging
-    IMAGE_REPO=gcr.io/flash2-staging
-    REPLICAS=3
+    CLUSTER_NAME: flash2-staging
+    IMAGE_REPO: gcr.io/flash2-staging
+    REPLICAS: 3
 
 develop_gcr_dockercfg:
   image: codeship/gcr-dockercfg-generator
