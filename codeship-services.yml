@@ -18,6 +18,14 @@ develop_build_nginx:
   cached: true
   default_cache_branch: "development"
 
+prod_build_nginx:
+  build:
+    image: flash2-production/nginx
+    dockerfile_path: nginx/Dockerfile
+  encrypted_env_file: deploy/prod/environment.env.encrypted
+  cached: true
+  default_cache_branch: "production"
+
 #
 # deploy app to k8s cluster
 #
@@ -46,6 +54,18 @@ develop_google_cloud_deployment_nginx:
     IMAGE_REPO: gcr.io/flash2-development
     REPLICAS: 3
 
+prod_google_cloud_deployment_nginx:
+  image: zachflower/google-cloud-deployment
+  add_docker: true
+  encrypted_env_file: deploy/prod/google_deployment.env.encrypted
+  volumes:
+    - ./deploy/:/deploy
+  environment:
+    CLUSTER_NAME: flash2-production
+    CLUSTER_ZONE: us-central1-b
+    IMAGE_REPO: gcr.io/flash2-production
+    REPLICAS: 3
+
 #
 # dockercfg configuration
 #
@@ -54,8 +74,11 @@ staging_gcr_dockercfg:
   image: codeship/gcr-dockercfg-generator
   add_docker: true
   encrypted_env_file: deploy/staging/google_deployment.env.encrypted
-
 develop_gcr_dockercfg:
   image: codeship/gcr-dockercfg-generator
   add_docker: true
   encrypted_env_file: deploy/develop/google_deployment.env.encrypted
+prod_gcr_dockercfg:
+  image: codeship/gcr-dockercfg-generator
+  add_docker: true
+  encrypted_env_file: deploy/prod/google_deployment.env.encrypted

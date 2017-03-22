@@ -23,6 +23,14 @@
       dockercfg_service: develop_gcr_dockercfg
       tag: ^(development|feature/multibranch)
 
+    - service: prod_build_nginx
+      type: push
+      image_name: gcr.io/flash2-production/nginx
+      image_tag: "{{.CommitID}}"
+      registry: https://gcr.io
+      dockercfg_service: develop_gcr_dockercfg
+      tag: ^(production|feature/multibranch)
+
   #
   # deploy app to k8s cluster
   #
@@ -36,3 +44,7 @@
     - service: develop_google_cloud_deployment_nginx
       command: /deploy/deploy_nginx.sh
       tag: ^(development|feature/multibranch)
+
+    - service: prod_google_cloud_deployment_nginx
+      command: /deploy/deploy_nginx.sh
+      tag: ^(production|feature/multibranch)
