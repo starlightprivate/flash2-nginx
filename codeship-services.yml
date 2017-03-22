@@ -1,10 +1,38 @@
-develop_build_nginx:
+#
+# build docker image and push to registry
+#
+
+staging_build_nginx:
   build:
     image: flash2-staging/nginx
     dockerfile_path: nginx/Dockerfile
   encrypted_env_file: deploy/develop/environment.env.encrypted
   cached: true
-  default_cache_branch: "develop"
+  default_cache_branch: "staging"
+
+develop_build_nginx:
+  build:
+    image: flash2-development/nginx
+    dockerfile_path: nginx/Dockerfile
+  encrypted_env_file: deploy/develop/environment.env.encrypted
+  cached: true
+  default_cache_branch: "development"
+
+#
+# deploy app to k8s cluster
+#
+
+staging_google_cloud_deployment_nginx:
+  image: zachflower/google-cloud-deployment
+  add_docker: true
+  encrypted_env_file: deploy/staging/google_deployment.env.encrypted
+  volumes:
+    - ./deploy/:/deploy
+  environment:
+    CLUSTER_NAME: flash2-staging
+    CLUSTER_ZONE: us-central1-b
+    IMAGE_REPO: gcr.io/flash2-staging
+    REPLICAS: 3
 
 develop_google_cloud_deployment_nginx:
   image: zachflower/google-cloud-deployment
@@ -13,9 +41,19 @@ develop_google_cloud_deployment_nginx:
   volumes:
     - ./deploy/:/deploy
   environment:
-    CLUSTER_NAME: flash2-staging
-    IMAGE_REPO: gcr.io/flash2-staging
+    CLUSTER_NAME: flash2-development
+    CLUSTER_ZONE: us-central1-b
+    IMAGE_REPO: gcr.io/flash2-development
     REPLICAS: 3
+
+#
+# dockercfg configuration
+#
+
+staging_gcr_dockercfg:
+  image: codeship/gcr-dockercfg-generator
+  add_docker: true
+  encrypted_env_file: deploy/staging/google_deployment.env.encrypted
 
 develop_gcr_dockercfg:
   image: codeship/gcr-dockercfg-generator
