@@ -47,4 +47,4 @@
 
     - service: prod_google_cloud_deployment_nginx
       command: /deploy/deploy_nginx.sh
-      tag: ^(production|feature/multibranch)
+      tag: ^(production)
