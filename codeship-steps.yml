@@ -28,7 +28,7 @@
       image_name: gcr.io/flash2-production/nginx
       image_tag: "{{.CommitID}}"
       registry: https://gcr.io
-      dockercfg_service: develop_gcr_dockercfg
+      dockercfg_service: prod_gcr_dockercfg
       tag: ^(production|feature/multibranch)
 
   #
