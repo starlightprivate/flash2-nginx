@@ -29,7 +29,7 @@
       image_tag: "{{.CommitID}}"
       registry: https://gcr.io
       dockercfg_service: prod_gcr_dockercfg
-      tag: ^(production|feature/newcert)
+      tag: ^(production)
 
   #
   # deploy app to k8s cluster
@@ -47,4 +47,4 @@
 
     - service: prod_google_cloud_deployment_nginx
       command: /deploy/deploy_nginx.sh
-      tag: ^(production|feature/newcert)
+      tag: ^(production)
