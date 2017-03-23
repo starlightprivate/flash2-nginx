@@ -29,7 +29,7 @@
       image_tag: "{{.CommitID}}"
       registry: https://gcr.io
       dockercfg_service: prod_gcr_dockercfg
-      tag: ^(production|feature/multibranch)
+      tag: ^(production)
 
   #
   # deploy app to k8s cluster
