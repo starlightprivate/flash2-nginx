@@ -1,11 +1,50 @@
-- service: develop_build_nginx
-  type: push
-  image_name: gcr.io/flash2-staging/nginx
-  image_tag: "{{.Branch}}.{{.CommitID}}"
-  registry: https://gcr.io
-  dockercfg_service: develop_gcr_dockercfg
-  tag: ^(master|develop)
+- type: serial
+  steps:
 
-- service: develop_google_cloud_deployment_nginx
-  command: /deploy/deploy_nginx.sh
-  tag: ^(master|develop)
+  #
+  # build docker image and push to registry
+  #
+
+  - type: parallel
+    steps:
+    - service: staging_build_nginx
+      type: push
+      image_name: gcr.io/flash2-staging/nginx
+      image_tag: "{{.CommitID}}"
+      registry: https://gcr.io
+      dockercfg_service: staging_gcr_dockercfg
+      tag: ^(staging)
+
+    - service: develop_build_nginx
+      type: push
+      image_name: gcr.io/flash2-development/nginx
+      image_tag: "{{.CommitID}}"
+      registry: https://gcr.io
+      dockercfg_service: develop_gcr_dockercfg
+      tag: ^(development)
+
+    - service: prod_build_nginx
+      type: push
+      image_name: gcr.io/flash2-production/nginx
+      image_tag: "{{.CommitID}}"
+      registry: https://gcr.io
+      dockercfg_service: prod_gcr_dockercfg
+      tag: ^(production)
+
+  #
+  # deploy app to k8s cluster
+  #
+
+  - type: parallel
+    steps:
+    - service: staging_google_cloud_deployment_nginx
+      command: /deploy/deploy_nginx.sh
+      tag: ^(staging)
+
+    - service: develop_google_cloud_deployment_nginx
+      command: /deploy/deploy_nginx.sh
+      tag: ^(development)
+
+    - service: prod_google_cloud_deployment_nginx
+      command: /deploy/deploy_nginx.sh
+      tag: ^(production)
